@@ -1,0 +1,129 @@
+:root {
+  --brown: #664F0B;
+  --cream: #EDDEB2;
+  --lilac: #DDC5F0;
+  --purple: #902ADE;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Sora', sans-serif;
+  color: var(--brown);
+  background: var(--lilac);
+}
+
+section {
+  background: var(--section-bg, var(--lilac));
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(2rem, 6vw, 6rem);
+  padding: 6rem clamp(1.5rem, 6vw, 6rem);
+}
+
+.hero-photo {
+  flex: 0 0 auto;
+  width: clamp(220px, 28vw, 380px);
+  aspect-ratio: 1125 / 1846;
+}
+
+.hero-photo canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: none;
+}
+
+.hero-text {
+  flex: 1 1 480px;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.hero-name {
+  font-size: clamp(2.25rem, 4vw, 3.25rem);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.1;
+}
+
+.hero-line {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 400;
+  margin: 0.75rem 0 0;
+  min-height: 2.4em;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.hero-line.fade {
+  opacity: 0;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2.5rem;
+}
+
+.btn {
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  border: 2px solid var(--brown);
+  color: var(--brown);
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.btn-primary {
+  background: var(--brown);
+  color: var(--lilac);
+}
+
+.btn-primary:hover {
+  background: var(--purple);
+  border-color: var(--purple);
+  color: #fff;
+}
+
+.btn-secondary {
+  background: transparent;
+}
+
+.btn-secondary:hover {
+  border-color: var(--purple);
+  color: var(--purple);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 800px) {
+  .hero {
+    flex-direction: column;
+    text-align: left;
+    padding-top: 4rem;
+  }
+
+  .hero-photo {
+    width: min(70vw, 320px);
+  }
+}
