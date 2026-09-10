@@ -25,9 +25,23 @@ section {
   background: var(--section-bg, var(--lilac));
 }
 
+/* ---------- Scroll progress ---------- */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: var(--purple);
+  z-index: 1000;
+  pointer-events: none;
+}
+
 /* ---------- Hero ---------- */
 
 .hero {
+  position: relative;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -35,7 +49,19 @@ section {
   padding: 6rem clamp(1.5rem, 6vw, 6rem);
 }
 
+.hero::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--hero-line-y, 70%);
+  height: 2px;
+  background: var(--cream);
+  pointer-events: none;
+}
+
 .hero-inner {
+  position: relative;
   display: flex;
   align-items: stretch;
   justify-content: center;
@@ -48,6 +74,17 @@ section {
   flex: 0 0 auto;
   width: clamp(154px, 19.6vw, 266px);
   aspect-ratio: 1125 / 1846;
+}
+
+.hero-photo::before {
+  content: '';
+  position: absolute;
+  background: var(--cream);
+  pointer-events: none;
+  bottom: 0;
+  right: 0;
+  width: 2px;
+  height: 150vh;
 }
 
 .hero-photo canvas {
@@ -117,6 +154,7 @@ section {
   display: flex;
   gap: 1rem;
   margin-top: 2.5rem;
+  margin-bottom: 1rem;
 }
 
 .btn {
