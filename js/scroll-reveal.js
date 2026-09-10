@@ -1,5 +1,8 @@
 (function () {
-  const bandTargets = document.querySelectorAll('.work');
+  // Observe the (short) band itself, not the whole .work section — that
+  // section is much taller than any viewport once all projects are in it,
+  // so a ratio-based threshold on it could never be satisfied.
+  const bandTargets = document.querySelectorAll('.work-band');
   const projectTargets = document.querySelectorAll('.project');
 
   const BAND_REVEAL_MS = 1100;
@@ -39,12 +42,13 @@
   const bandObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        entry.target.classList.add('in-view');
+        const section = entry.target.closest('.work') || entry.target;
+        section.classList.add('in-view');
         bandObserver.unobserve(entry.target);
         setTimeout(startProjectObserver, BAND_REVEAL_MS);
       }
     });
-  }, { threshold: 0.3 });
+  }, { threshold: 0.15 });
 
   bandTargets.forEach(el => bandObserver.observe(el));
 })();

@@ -156,6 +156,23 @@
     lastPoint = null;
   });
 
+  function handleTouch(e) {
+    if (!currentImg) return;
+    const touch = e.touches[0];
+    if (!touch) return;
+    e.preventDefault();
+    if (hint) hint.classList.add('hidden');
+    const p = toCanvasCoords(touch.clientX, touch.clientY);
+    scratchTo(p);
+  }
+
+  wrapper.addEventListener('touchstart', handleTouch, { passive: false });
+  wrapper.addEventListener('touchmove', handleTouch, { passive: false });
+
+  wrapper.addEventListener('touchend', () => {
+    lastPoint = null;
+  });
+
   window.addEventListener('resize', resize);
 
   const img = new Image();

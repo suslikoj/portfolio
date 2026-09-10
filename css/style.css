@@ -55,6 +55,7 @@ section {
   height: 100%;
   display: block;
   cursor: none;
+  touch-action: none;
 }
 
 .scratch-hint {
@@ -466,6 +467,11 @@ section {
   .hero-photo {
     width: min(70vw, 320px);
     align-self: center;
+  }
+
+  .hero-text {
+    flex: none;
+    justify-content: flex-start;
   }
 
   .project,
