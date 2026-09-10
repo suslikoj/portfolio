@@ -79,6 +79,7 @@
 
   function resize() {
     const rect = wrapper.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return;
     dpr = Math.max(window.devicePixelRatio || 1, 1);
     w = Math.round(rect.width * dpr);
     h = Math.round(rect.height * dpr);
@@ -142,8 +143,11 @@
     render();
   }
 
+  const hint = document.getElementById('scratchHint');
+
   wrapper.addEventListener('mousemove', (e) => {
     if (!currentImg) return;
+    if (hint) hint.classList.add('hidden');
     const p = toCanvasCoords(e.clientX, e.clientY);
     scratchTo(p);
   });
