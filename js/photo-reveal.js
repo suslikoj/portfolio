@@ -8,7 +8,7 @@
   const ctx = canvas.getContext('2d');
 
   const BRUSH_WIDTH = 60;
-  const COVER_COLOR = '#902ADE';
+  const COVER_COLOR = '#EDDEB2';
 
   let dpr = Math.max(window.devicePixelRatio || 1, 1);
   let w = 0, h = 0;

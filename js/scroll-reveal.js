@@ -2,9 +2,7 @@
   const bandTargets = document.querySelectorAll('.work');
   const projectTargets = document.querySelectorAll('.project');
 
-  // Keep in sync with the band/title clip-path transition timing in style.css
-  // (band: 1.6s, title: 1.6s + 0.5s delay -> finishes at 2.1s).
-  const BAND_REVEAL_MS = 2200;
+  const BAND_REVEAL_MS = 1100;
 
   if (!('IntersectionObserver' in window)) {
     bandTargets.forEach(el => el.classList.add('in-view'));
@@ -12,8 +10,8 @@
     return;
   }
 
-  const MEDIA_RATIO = 0.25;
-  const TEXT_RATIO = 0.5;
+  const MEDIA_RATIO = 0.1;
+  const TEXT_RATIO = 0.2;
 
   function startProjectObserver() {
     const projectObserver = new IntersectionObserver((entries) => {
