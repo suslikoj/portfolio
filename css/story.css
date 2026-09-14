@@ -1,0 +1,311 @@
+.story-page {
+  background: var(--cream);
+}
+
+.story-back {
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  z-index: 20;
+  font-family: 'Sora', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--brown);
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid rgba(102, 79, 11, 0.2);
+  padding: 0.55rem 1.05rem;
+  border-radius: 999px;
+}
+
+.story-back:hover {
+  color: var(--purple);
+  border-color: var(--purple);
+}
+
+.story-hero {
+  padding: 8rem clamp(1.5rem, 8vw, 8rem) 5rem;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.story-eyebrow {
+  margin: 0 0 0.85rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--purple);
+}
+
+.story-hero h1 {
+  margin: 0 0 2.25rem;
+  font-size: clamp(1.9rem, 3.6vw, 2.6rem);
+  font-weight: 700;
+  color: var(--brown);
+  letter-spacing: -0.01em;
+}
+
+.story-intro p {
+  margin: 0 0 1.15rem;
+  line-height: 1.75;
+  color: var(--brown);
+}
+
+.story-intro em,
+.story-text em,
+.story-reflection-block em {
+  font-style: italic;
+  font-weight: 700;
+  color: var(--purple);
+}
+
+/* ---------- Road / scroll stage ---------- */
+
+.story-road-wrap {
+  position: relative;
+  height: calc(24 * 100vh);
+  background: var(--cream);
+}
+
+.road-visual {
+  position: sticky;
+  top: 0;
+  height: 42vh;
+  overflow: hidden;
+  background: var(--cream);
+}
+
+.story-content-panel {
+  position: sticky;
+  top: 50vh;
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--cream);
+}
+
+.story-road-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#roadRibbon {
+  filter: drop-shadow(0 0.6vh 1.4vh rgba(102, 79, 11, 0.16));
+}
+
+#roadCenterline {
+  stroke: #ffffff;
+  stroke-linecap: round;
+}
+
+.road-markers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.road-marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform, opacity;
+}
+
+.road-marker .marker-dot {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0.7rem;
+  height: 0.7rem;
+  margin: -0.35rem 0 0 -0.35rem;
+  border-radius: 50%;
+  background: var(--purple);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.7);
+}
+
+.road-marker .marker-label {
+  position: absolute;
+  top: 0;
+  width: 9rem;
+  text-align: left;
+}
+
+.road-marker.side-right .marker-label {
+  left: 1.1rem;
+  text-align: left;
+}
+
+.road-marker.side-left .marker-label {
+  right: 1.1rem;
+  left: auto;
+  text-align: right;
+}
+
+.road-marker .marker-num {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--purple);
+  margin-bottom: 0.1rem;
+}
+
+.road-marker .marker-title {
+  display: block;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--brown);
+  line-height: 1.25;
+}
+
+.story-progress {
+  flex: none;
+  margin: 0 0 0.85rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--brown);
+  opacity: 0.5;
+}
+
+.story-heading {
+  flex: none;
+  margin: 0 0 1.1rem;
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 700;
+  color: var(--brown);
+  line-height: 1.2;
+}
+
+.story-text {
+  position: relative;
+  z-index: 2;
+  max-width: 920px;
+  width: min(90vw, 920px);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  text-align: center;
+  padding: 1.5rem 1.5rem;
+  transition: opacity 0.2s linear;
+}
+
+.story-body-viewport {
+  position: relative;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#storyBody {
+  will-change: transform;
+}
+
+.story-text p {
+  margin: 0 0 0.6rem;
+  line-height: 1.55;
+  color: var(--brown);
+  font-size: 0.92rem;
+}
+
+.story-text ul {
+  margin: 0 0 0.6rem;
+  padding-left: 1.25rem;
+  text-align: left;
+  display: inline-block;
+}
+
+.story-text li {
+  margin-bottom: 0.25rem;
+  line-height: 1.5;
+  color: var(--brown);
+  font-size: 0.92rem;
+}
+
+.story-text code {
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  background: rgba(102, 79, 11, 0.1);
+  padding: 0.1rem 0.4rem;
+  border-radius: 0.3rem;
+  font-size: 0.9em;
+}
+
+/* ---------- Reflection (outside the road) ---------- */
+
+.story-reflection {
+  background: var(--cream);
+  padding: 6rem clamp(1.5rem, 8vw, 8rem) 7rem;
+  max-width: 640px;
+  margin: 0 auto;
+  border-top: 1px solid rgba(102, 79, 11, 0.15);
+}
+
+.story-reflection-block {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.story-reflection-block:last-child {
+  margin-bottom: 0;
+}
+
+.story-reflection-block h2 {
+  margin: 0 0 1.75rem;
+  font-size: clamp(1.5rem, 2.8vw, 2rem);
+  font-weight: 700;
+  color: var(--brown);
+}
+
+.story-reflection-block p {
+  margin: 0 0 1.1rem;
+  line-height: 1.75;
+  color: var(--brown);
+  text-align: left;
+}
+
+
+@media (max-width: 700px) {
+  .story-back {
+    top: 1rem;
+    left: 1rem;
+    font-size: 0.78rem;
+    padding: 0.5rem 0.9rem;
+  }
+
+  .road-marker .marker-label {
+    width: 7rem;
+  }
+
+  .road-marker .marker-title {
+    font-size: 0.85rem;
+  }
+
+  .road-visual {
+    height: 36vh;
+  }
+
+  .story-content-panel {
+    top: 42vh;
+    height: 58vh;
+  }
+
+  .story-heading {
+    margin-bottom: 0.9rem;
+  }
+
+  .story-text {
+    padding: 1.25rem 1.25rem;
+  }
+
+  .story-text p,
+  .story-text li {
+    font-size: 0.88rem;
+    margin-bottom: 0.5rem;
+  }
+}
