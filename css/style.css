@@ -346,20 +346,24 @@ section {
   overflow: hidden;
 }
 
-.video-placeholder {
-  margin: 0;
-  padding: 0 1rem;
-  text-align: center;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--purple);
+.photo-fade {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
-.device-video {
+.photo-fade-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
+  opacity: 0;
+  transition: opacity 1.1s ease;
+}
+
+.photo-fade-img.is-active {
+  opacity: 1;
 }
 
 .device-phone {
