@@ -71,7 +71,7 @@
 .road-visual {
   position: sticky;
   top: 0;
-  height: 42vh;
+  height: 47vh;
   overflow: hidden;
   background: var(--cream);
 }
@@ -85,6 +85,179 @@
   justify-content: center;
   overflow: hidden;
   background: var(--cream);
+}
+
+/* Per-stop reference photos, sitting in the road's own empty corners (near
+   the vanishing point, where the ribbon never reaches) so they never cover
+   the ribbon or the centered text column below. Only shown once the
+   viewport is wide enough to guarantee that space is actually empty. */
+.story-photos {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  display: none;
+  transition: opacity 0.2s linear;
+}
+
+.story-photo {
+  position: relative;
+  border-radius: 1.3rem;
+  border: 4px solid #fff;
+  box-shadow: 0 0.8rem 1.6rem rgba(102, 79, 11, 0.24);
+  overflow: hidden;
+  pointer-events: auto;
+  cursor: pointer;
+  background: none;
+  padding: 0;
+  flex: none;
+}
+
+.story-photo img {
+  display: block;
+  width: 100%;
+}
+
+.story-photo:not(.story-photo--wide) {
+  height: min(38vh, 230px);
+  width: calc(min(38vh, 230px) * 0.46);
+}
+
+.story-photo:not(.story-photo--wide) img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.story-photo--wide {
+  width: clamp(160px, 15vw, 240px);
+  border-radius: 0.6rem;
+}
+
+.story-photo--wide img {
+  height: auto;
+}
+
+/* Standalone single photo — positioned directly in the road's corner. */
+.story-photos > .story-photo {
+  position: absolute;
+  top: 0.85rem;
+}
+
+.story-photos > .story-photo[data-side="left"] {
+  right: calc(50% + 6.5rem);
+}
+
+.story-photos > .story-photo[data-side="right"] {
+  left: calc(50% + 6.5rem);
+}
+
+/* Before/after pair — the two photos sit right next to each other with a
+   connecting arrow, so the comparison reads as one grouped unit. */
+.story-photo-pair {
+  position: absolute;
+  top: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.story-photo-pair[data-side="left"] {
+  right: calc(50% + 6.5rem);
+}
+
+.story-photo-pair[data-side="right"] {
+  left: calc(50% + 6.5rem);
+}
+
+.story-photo-pair .story-photo--wide {
+  width: clamp(120px, 10vw, 165px);
+}
+
+.story-photo-pair-arrow {
+  flex: none;
+  color: var(--purple);
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.story-photo--tilt-left {
+  transform: rotate(-4deg);
+}
+
+.story-photo--tilt-right {
+  transform: rotate(4deg);
+}
+
+.story-photo:hover {
+  transform: rotate(0deg) scale(1.04);
+}
+
+.story-photo::before {
+  content: '✦';
+  position: absolute;
+  color: var(--purple);
+  font-size: 1.1rem;
+  pointer-events: none;
+}
+
+.story-photo--tilt-left::before {
+  top: -0.9rem;
+  right: -0.7rem;
+}
+
+.story-photo--tilt-right::before {
+  top: -0.9rem;
+  left: -0.7rem;
+}
+
+@media (min-width: 1040px) {
+  .story-photos {
+    display: block;
+  }
+}
+
+/* ---------- Photo lightbox ---------- */
+
+.story-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  background: rgba(102, 79, 11, 0.72);
+  cursor: zoom-out;
+}
+
+.story-lightbox.is-open {
+  display: flex;
+}
+
+.story-lightbox img {
+  max-width: min(90vw, 640px);
+  max-height: 86vh;
+  width: auto;
+  height: auto;
+  border-radius: 0.6rem;
+  border: 6px solid #fff;
+  box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.35);
+  cursor: default;
+}
+
+.story-lightbox-close {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  color: var(--brown);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
 }
 
 .story-road-svg {
@@ -164,18 +337,18 @@
 
 .story-progress {
   flex: none;
-  margin: 0 0 0.85rem;
-  font-size: 0.72rem;
+  margin: 0 0 0.6rem;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: var(--brown);
-  opacity: 0.5;
+  opacity: 0.42;
 }
 
 .story-heading {
   flex: none;
-  margin: 0 0 1.1rem;
-  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  margin: 0 0 1rem;
+  font-size: clamp(1.4rem, 2.4vw, 1.85rem);
   font-weight: 700;
   color: var(--brown);
   line-height: 1.2;
@@ -184,14 +357,14 @@
 .story-text {
   position: relative;
   z-index: 2;
-  max-width: 920px;
-  width: min(90vw, 920px);
+  max-width: 980px;
+  width: min(92vw, 980px);
   height: 100%;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   text-align: center;
-  padding: 1.5rem 1.5rem;
+  padding: 1.25rem 1.5rem;
   transition: opacity 0.2s linear;
 }
 
@@ -208,24 +381,24 @@
 }
 
 .story-text p {
-  margin: 0 0 0.6rem;
-  line-height: 1.45;
+  margin: 0 0 0.5rem;
+  line-height: 1.4;
   color: var(--brown);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
 }
 
 .story-text ul {
-  margin: 0 0 0.6rem;
+  margin: 0 0 0.5rem;
   padding-left: 1.25rem;
   text-align: left;
   display: inline-block;
 }
 
 .story-text li {
-  margin-bottom: 0.25rem;
-  line-height: 1.4;
+  margin-bottom: 0.2rem;
+  line-height: 1.35;
   color: var(--brown);
-  font-size: 0.92rem;
+  font-size: 0.88rem;
 }
 
 .story-text code {
@@ -234,6 +407,95 @@
   padding: 0.1rem 0.4rem;
   border-radius: 0.3rem;
   font-size: 0.9em;
+}
+
+/* ---------- Key-insight callout ---------- */
+
+.story-insight {
+  display: flex;
+  gap: 0.85rem;
+  align-items: flex-start;
+  background: rgba(221, 197, 240, 0.32);
+  border: 1px solid rgba(144, 42, 222, 0.16);
+  border-radius: 0.85rem;
+  padding: 0.9rem 1.15rem;
+  margin: 0.5rem 0 0.7rem;
+  text-align: left;
+}
+
+.story-insight-icon {
+  flex: none;
+  margin-top: 0.05rem;
+  font-size: 1.05rem;
+  line-height: 1;
+  color: var(--purple);
+}
+
+.story-insight-title {
+  margin: 0 0 0.25rem;
+  font-weight: 700;
+  color: var(--purple-dark);
+  font-size: 0.92rem;
+  line-height: 1.3;
+}
+
+.story-insight-body {
+  margin: 0;
+  color: var(--brown);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+/* ---------- Feature highlight row ---------- */
+
+.story-features {
+  display: flex;
+  margin-top: 0.6rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(102, 79, 11, 0.14);
+}
+
+.story-feature {
+  flex: 1 1 0;
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+  padding: 0 0.9rem;
+  text-align: left;
+  border-left: 1px solid rgba(102, 79, 11, 0.14);
+}
+
+.story-feature:first-child {
+  border-left: none;
+  padding-left: 0;
+}
+
+.story-feature-icon {
+  flex: none;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 50%;
+  background: var(--lilac);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+}
+
+.story-feature-title {
+  margin: 0 0 0.1rem;
+  font-weight: 700;
+  color: var(--brown);
+  font-size: 0.8rem;
+}
+
+.story-feature-body {
+  margin: 0;
+  color: var(--brown);
+  opacity: 0.78;
+  font-size: 0.74rem;
+  line-height: 1.35;
 }
 
 /* ---------- Reflection (outside the road) ---------- */
@@ -287,7 +549,7 @@
   }
 
   .road-visual {
-    height: 36vh;
+    height: 40vh;
   }
 
   .story-content-panel {
@@ -305,7 +567,35 @@
 
   .story-text p,
   .story-text li {
-    font-size: 0.88rem;
-    margin-bottom: 0.5rem;
+    font-size: 0.84rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .story-insight {
+    padding: 0.75rem 0.9rem;
+  }
+
+  .story-insight-title {
+    font-size: 0.85rem;
+  }
+
+  .story-insight-body {
+    font-size: 0.76rem;
+  }
+
+  .story-features {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .story-feature {
+    border-left: none;
+    border-top: 1px solid rgba(102, 79, 11, 0.14);
+    padding: 0.6rem 0 0;
+  }
+
+  .story-feature:first-child {
+    border-top: none;
+    padding-top: 0;
   }
 }

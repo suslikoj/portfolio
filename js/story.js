@@ -9,6 +9,10 @@
   const textEl = document.getElementById('storyText');
   const progressEl = document.getElementById('storyProgress');
   const headingEl = document.getElementById('storyHeading');
+  const photosEl = document.getElementById('storyPhotos');
+  const lightboxEl = document.getElementById('storyLightbox');
+  const lightboxImgEl = document.getElementById('storyLightboxImg');
+  const lightboxCloseEl = document.getElementById('storyLightboxClose');
 
   if (!wrap || !svg || typeof STORY_STOPS === 'undefined') return;
 
@@ -28,25 +32,25 @@
   }
 
   let FRONT = 5.5;
-  let CURVE_AMPLITUDE = 26;
+  let CURVE_AMPLITUDE = 19;
   let CURVE_PERIOD = 5.2;
 
   function applyResponsiveTuning() {
     if (isMobile()) {
       FRONT = 3.6;
-      CURVE_AMPLITUDE = 16;
+      CURVE_AMPLITUDE = 12;
       CURVE_PERIOD = 4.4;
     } else {
       FRONT = 5.5;
-      CURVE_AMPLITUDE = 26;
+      CURVE_AMPLITUDE = 19;
       CURVE_PERIOD = 5.2;
     }
   }
 
   const TOP_Y = 11;      // vh% — vanishing point
   const BOTTOM_Y = 112;  // vh% — near foreground, allowed to exceed 100 so it exits past the viewer
-  const WIDE_WIDTH = 62; // vw% at closeness = 1
-  const MIN_WIDTH = 1.6; // vw% floor near the vanishing point
+  const WIDE_WIDTH = 36; // vw% at closeness = 1 — narrower path, more cream space around it
+  const MIN_WIDTH = 1.2; // vw% floor near the vanishing point
 
   function curveWorldX(u) {
     return Math.sin((u / CURVE_PERIOD) * Math.PI * 2) * CURVE_AMPLITUDE;
@@ -74,12 +78,98 @@
   });
 
   function renderBody(stop) {
-    bodyEl.innerHTML = stop.paragraphs.map((p) => {
+    let html = stop.paragraphs.map((p) => {
       if (p && p.list) {
         return '<ul>' + p.list.map((li) => '<li>' + li + '</li>').join('') + '</ul>';
       }
       return '<p>' + p + '</p>';
     }).join('');
+
+    if (stop.insight) {
+      html += '<div class="story-insight">' +
+        '<span class="story-insight-icon">' + (stop.insight.icon || '✦') + '</span>' +
+        '<div><p class="story-insight-title">' + stop.insight.title + '</p>' +
+        '<p class="story-insight-body">' + stop.insight.body + '</p></div>' +
+        '</div>';
+    }
+
+    if (stop.features && stop.features.length) {
+      html += '<div class="story-features">' + stop.features.map((f) =>
+        '<div class="story-feature">' +
+        '<span class="story-feature-icon">' + f.icon + '</span>' +
+        '<div><p class="story-feature-title">' + f.title + '</p>' +
+        '<p class="story-feature-body">' + f.body + '</p></div>' +
+        '</div>'
+      ).join('') + '</div>';
+    }
+
+    bodyEl.innerHTML = html;
+  }
+
+  function openLightbox(src, alt) {
+    if (!lightboxEl) return;
+    lightboxImgEl.src = src;
+    lightboxImgEl.alt = alt || '';
+    lightboxEl.classList.add('is-open');
+  }
+
+  function closeLightbox() {
+    if (!lightboxEl) return;
+    lightboxEl.classList.remove('is-open');
+  }
+
+  if (lightboxEl) {
+    lightboxEl.addEventListener('click', function (e) {
+      if (e.target === lightboxEl) closeLightbox();
+    });
+    lightboxCloseEl.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  }
+
+  function buildPhotoEl(photo, tiltClass) {
+    const fig = document.createElement('button');
+    fig.type = 'button';
+    fig.className = 'story-photo' + (photo.wide ? ' story-photo--wide' : '') + (tiltClass ? ' ' + tiltClass : '');
+    fig.setAttribute('aria-label', 'Zvětšit fotku: ' + (photo.alt || ''));
+    const img = document.createElement('img');
+    img.src = photo.src;
+    img.alt = photo.alt || '';
+    fig.appendChild(img);
+    fig.addEventListener('click', function () {
+      openLightbox(photo.src, photo.alt);
+    });
+    return fig;
+  }
+
+  function renderPhotos(stop) {
+    if (!photosEl) return;
+    photosEl.innerHTML = '';
+    if (!stop.images || !stop.images.length) return;
+
+    if (stop.images.length === 2) {
+      // Before/after pair — keep the two photos grouped together with a
+      // connecting arrow so the comparison is obvious at a glance.
+      const pair = document.createElement('div');
+      pair.className = 'story-photo-pair';
+      pair.dataset.side = stop.images[0].side || 'left';
+      pair.appendChild(buildPhotoEl(stop.images[0], 'story-photo--tilt-left'));
+      const arrow = document.createElement('span');
+      arrow.className = 'story-photo-pair-arrow';
+      arrow.setAttribute('aria-hidden', 'true');
+      arrow.textContent = '→';
+      pair.appendChild(arrow);
+      pair.appendChild(buildPhotoEl(stop.images[1], 'story-photo--tilt-right'));
+      photosEl.appendChild(pair);
+    } else {
+      stop.images.forEach(function (photo) {
+        const tiltClass = photo.side === 'right' ? 'story-photo--tilt-right' : 'story-photo--tilt-left';
+        const fig = buildPhotoEl(photo, tiltClass);
+        fig.dataset.side = photo.side;
+        photosEl.appendChild(fig);
+      });
+    }
   }
 
   let currentIndex = -1;
@@ -253,6 +343,7 @@
     if (bestIndex !== currentIndex) {
       currentIndex = bestIndex;
       renderBody(STORY_STOPS[bestIndex]);
+      renderPhotos(STORY_STOPS[bestIndex]);
       progressEl.textContent = STORY_STOPS[bestIndex].num + ' / ' + total;
       headingEl.textContent = STORY_STOPS[bestIndex].title;
       smoothedTextOffset = 0;
@@ -264,7 +355,9 @@
     bodyEl.style.transform = 'translateY(-' + smoothedTextOffset.toFixed(1) + 'px)';
 
     const activeDepth = sampleAt(bestIndex, camera).depth;
-    textEl.style.opacity = markerOpacityFromDepth(activeDepth);
+    const activeOpacity = markerOpacityFromDepth(activeDepth);
+    textEl.style.opacity = activeOpacity;
+    if (photosEl) photosEl.style.opacity = activeOpacity;
   }
 
   function tick() {
