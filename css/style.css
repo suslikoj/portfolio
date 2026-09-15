@@ -369,24 +369,24 @@ section {
 .device-phone {
   width: clamp(160px, 20vw, 220px);
   aspect-ratio: 9 / 19.5;
-  padding: 0.6rem;
-  border-radius: 2rem;
+  padding: 0.28rem;
+  border-radius: 1.6rem;
 }
 
 .device-phone .device-screen {
-  border-radius: 1.4rem;
+  border-radius: 1.3rem;
 }
 
 .device-laptop {
   width: clamp(260px, 34vw, 460px);
   aspect-ratio: 16 / 10;
-  padding: 0.6rem;
-  border-radius: 0.6rem;
+  padding: 0.3rem;
+  border-radius: 0.5rem;
   position: relative;
 }
 
 .device-laptop .device-screen {
-  border-radius: 0.25rem;
+  border-radius: 0.2rem;
 }
 
 .device-laptop::after {

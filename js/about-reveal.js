@@ -122,8 +122,13 @@
   }
 
   // Clear immediately so nothing flashes fully-formed before it types in.
+  // Lock in each block's fully-typed height first, so the layout (and the
+  // sticky portrait next to it) doesn't shift as the text grows in.
   const pending = typeTargets.map(el => ({ el, chars: toChars(el) }));
-  pending.forEach(({ el }) => { el.textContent = ''; });
+  pending.forEach(({ el }) => {
+    el.style.minHeight = el.offsetHeight + 'px';
+    el.textContent = '';
+  });
 
   async function runTypingSequence() {
     for (const { el, chars } of pending) {

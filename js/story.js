@@ -198,7 +198,9 @@
   let totalRawPx = 0;
 
   function measureAndBuild() {
-    PX_PER_UNIT = window.innerHeight * 1.1;
+    // Mobile gets extra scroll distance per stop — on a short viewport the
+    // 1.1x factor alone still made stops flip past too quickly to read.
+    PX_PER_UNIT = window.innerHeight * (isMobile() ? 1.7 : 1.1);
 
     const heights = [];
     const viewports = [];
