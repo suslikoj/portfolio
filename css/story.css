@@ -89,14 +89,13 @@
 
 /* Per-stop reference photos, sitting in the road's own empty corners (near
    the vanishing point, where the ribbon never reaches) so they never cover
-   the ribbon or the centered text column below. Only shown once the
-   viewport is wide enough to guarantee that space is actually empty. */
+   the ribbon or the centered text column below. Sized with clamp()/vw so
+   they shrink smoothly with the viewport instead of disappearing. */
 .story-photos {
   position: absolute;
   inset: 0;
   z-index: 3;
   pointer-events: none;
-  display: none;
   transition: opacity 0.2s linear;
 }
 
@@ -119,8 +118,8 @@
 }
 
 .story-photo:not(.story-photo--wide) {
-  height: min(38vh, 230px);
-  width: calc(min(38vh, 230px) * 0.46);
+  height: min(36vh, clamp(58px, 20vw, 230px));
+  width: calc(min(36vh, clamp(58px, 20vw, 230px)) * 0.46);
 }
 
 .story-photo:not(.story-photo--wide) img {
@@ -129,7 +128,7 @@
 }
 
 .story-photo--wide {
-  width: clamp(160px, 15vw, 240px);
+  width: clamp(80px, 15vw, 240px);
   border-radius: 0.6rem;
 }
 
@@ -140,37 +139,37 @@
 /* Standalone single photo — positioned directly in the road's corner. */
 .story-photos > .story-photo {
   position: absolute;
-  top: 0.85rem;
+  top: 0.7rem;
 }
 
 .story-photos > .story-photo[data-side="left"] {
-  right: calc(50% + 6.5rem);
+  right: calc(50% + clamp(0.5rem, 7vw, 6.5rem));
 }
 
 .story-photos > .story-photo[data-side="right"] {
-  left: calc(50% + 6.5rem);
+  left: calc(50% + clamp(0.5rem, 7vw, 6.5rem));
 }
 
 /* Before/after pair — the two photos sit right next to each other with a
    connecting arrow, so the comparison reads as one grouped unit. */
 .story-photo-pair {
   position: absolute;
-  top: 0.85rem;
+  top: 0.7rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.35rem;
 }
 
 .story-photo-pair[data-side="left"] {
-  right: calc(50% + 6.5rem);
+  right: calc(50% + clamp(0.5rem, 7vw, 6.5rem));
 }
 
 .story-photo-pair[data-side="right"] {
-  left: calc(50% + 6.5rem);
+  left: calc(50% + clamp(0.5rem, 7vw, 6.5rem));
 }
 
 .story-photo-pair .story-photo--wide {
-  width: clamp(120px, 10vw, 165px);
+  width: clamp(60px, 10vw, 165px);
 }
 
 .story-photo-pair-arrow {
@@ -208,12 +207,6 @@
 .story-photo--tilt-right::before {
   top: -0.9rem;
   left: -0.7rem;
-}
-
-@media (min-width: 1040px) {
-  .story-photos {
-    display: block;
-  }
 }
 
 /* ---------- Photo lightbox ---------- */
@@ -555,6 +548,19 @@
   .story-content-panel {
     top: 42vh;
     height: 58vh;
+  }
+
+  .story-photo-pair {
+    gap: 0.3rem;
+  }
+
+  .story-photo-pair-arrow {
+    font-size: 1.1rem;
+  }
+
+  .story-photos > .story-photo,
+  .story-photo-pair {
+    top: 3.75rem;
   }
 
   .story-heading {
