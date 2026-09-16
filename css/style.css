@@ -3,7 +3,6 @@
   --cream: #EDDEB2;
   --lilac: #DDC5F0;
   --purple: #902ADE;
-  --purple-dark: #5E1B90;
 }
 
 * {
@@ -101,7 +100,7 @@ section {
   left: 50%;
   transform: translate(-50%, -50%);
   margin: 0;
-  color: var(--purple-dark);
+  color: var(--purple);
   font-size: 0.85rem;
   font-weight: 600;
   text-align: center;
@@ -170,14 +169,13 @@ section {
 }
 
 .btn-primary {
-  background: var(--brown);
-  color: var(--lilac);
-}
-
-.btn-primary:hover {
   background: var(--purple);
   border-color: var(--purple);
   color: #fff;
+}
+
+.btn-primary:hover {
+  filter: brightness(0.88);
 }
 
 .btn-secondary {
@@ -240,15 +238,25 @@ section {
 .project-media {
   flex: 0 0 auto;
   display: flex;
+  align-items: center;
   justify-content: center;
   opacity: 0;
-  transform: translateY(60px);
-  transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.9s ease;
+  transform: translateY(60px) scale(1);
+  padding: clamp(2rem, 4vw, 3.5rem);
+  border-radius: 1.75rem;
+  background: var(--lilac);
+  box-shadow: 0 0 0 rgba(94, 27, 144, 0);
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.9s ease, box-shadow 0.4s ease;
 }
 
 .project.media-in .project-media {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
+}
+
+.project.media-in .project-media:hover {
+  transform: translateY(0) scale(1.05);
+  box-shadow: 0 2.5rem 4.5rem rgba(94, 27, 144, 0.4);
 }
 
 .project-text {
@@ -271,29 +279,21 @@ section {
   transform: translateX(0);
 }
 
-.project-num {
-  color: var(--purple);
-}
-
 .project-title {
   margin: 0 0 0.5rem;
   font-size: clamp(1.4rem, 2.4vw, 1.9rem);
   font-weight: 700;
-}
-
-.project-category {
-  margin: 0 0 1.25rem;
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  opacity: 0.75;
+  color: var(--purple);
 }
 
 .project-tagline {
-  margin: 0 0 0.75rem;
-  font-size: 1.1rem;
+  margin: 0 0 0.9rem;
+  font-size: 0.82rem;
   font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--brown);
+  opacity: 0.65;
 }
 
 .project-desc {
@@ -301,33 +301,136 @@ section {
   line-height: 1.55;
 }
 
-.project-meta {
-  margin: 0 0 0.5rem;
-  font-size: 0.92rem;
-  line-height: 1.5;
-}
-
-.project-stat {
-  display: inline-block;
-  margin: 1rem 0 0;
-  padding: 0.4rem 0.9rem;
-  border-radius: 999px;
-  background: var(--brown);
-  color: var(--lilac);
-  font-size: 0.85rem;
-  font-weight: 600;
-}
-
 .project-link {
   display: inline-block;
-  margin-top: 1.5rem;
-  color: var(--purple);
+  margin-top: 1rem;
+  color: var(--brown);
   font-weight: 700;
   text-decoration: none;
 }
 
 .project-link:hover {
   text-decoration: underline;
+}
+
+.project-primary-link {
+  margin: 0 0 1.25rem;
+}
+
+.store-badges {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0 0 1.25rem;
+}
+
+/* ---------- Chips: role & tools ---------- */
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0 0 1.25rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--brown);
+  white-space: nowrap;
+}
+
+.chip-role {
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.chip-tool {
+  background: var(--cream);
+}
+
+.chip-icon {
+  display: inline-flex;
+  flex: none;
+  color: var(--brown);
+  opacity: 0.75;
+}
+
+.chip-icon svg {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+}
+
+.chip-label {
+  margin: 0 0 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--purple);
+}
+
+.project-divider {
+  height: 1px;
+  background: rgba(102, 79, 11, 0.15);
+  margin: 0.5rem 0 1.25rem;
+}
+
+/* ---------- Footer row: stat, CTA, tags ---------- */
+
+.project-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.1rem 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.project-stat {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.project-stat-number {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--purple);
+}
+
+.project-stat-label {
+  font-size: 0.78rem;
+  color: var(--brown);
+  opacity: 0.7;
+}
+
+.project-tags {
+  margin: 0 0 0 auto;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brown);
+  opacity: 0.5;
+}
+
+.store-badge {
+  display: inline-flex;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.store-badge:hover {
+  transform: translateY(-2px);
+  opacity: 0.85;
+}
+
+.store-badge img {
+  display: block;
+  height: 2.5rem;
+  width: auto;
 }
 
 /* ---------- Device mockups ---------- */
@@ -512,7 +615,7 @@ section {
 }
 
 .back-to-top:hover {
-  background: var(--purple-dark);
+  filter: brightness(0.88);
   transform: translateY(-4px);
 }
 

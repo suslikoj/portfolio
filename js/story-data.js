@@ -39,9 +39,9 @@ const STORY_STOPS = [
       body: 'Takhle vypadaly úplně první kroky – a od začátku jsem chtěla, aby jeden účet fungoval na více zařízeních.'
     },
     features: [
-      { icon: '🔥', title: 'Firebase', body: 'Authentication, Firestore a Storage pro účty, data i soubory.' },
-      { icon: '⚙️', title: 'GetX', body: 'Správa stavu a další logika aplikace.' },
-      { icon: '🌐', title: 'Čeština a angličtina', body: 'Obě jazykové verze od úplného začátku.' }
+      { icon: 'flame', title: 'Firebase', body: 'Authentication, Firestore a Storage pro účty, data i soubory.' },
+      { icon: 'gear', title: 'GetX', body: 'Správa stavu a další logika aplikace.' },
+      { icon: 'globe', title: 'Čeština a angličtina', body: 'Obě jazykové verze od úplného začátku.' }
     ]
   },
   {
@@ -101,9 +101,9 @@ const STORY_STOPS = [
       body: 'Chtěla jsem, aby obsah byl praktický, personalizovaný a skutečně užitečný i v každodenním životě.'
     },
     features: [
-      { icon: '📅', title: 'Kalendář', body: 'Záznamy o jídle, pokožce a alergenech.' },
-      { icon: '🍳', title: 'Recepty', body: 'Filtrované podle alergenů a aktuálního nastavení.' },
-      { icon: '📝', title: 'Blog', body: 'Ověřené informace a tipy pro rodiče.' }
+      { icon: 'calendar', title: 'Kalendář', body: 'Záznamy o jídle, pokožce a alergenech.' },
+      { icon: 'recipe', title: 'Recepty', body: 'Filtrované podle alergenů a aktuálního nastavení.' },
+      { icon: 'document', title: 'Blog', body: 'Ověřené informace a tipy pro rodiče.' }
     ]
   },
   {
@@ -122,7 +122,8 @@ const STORY_STOPS = [
     num: '09',
     title: 'Co nefungovalo',
     images: [
-      { src: 'assets/img/story/prehlavni.jpg', alt: 'Hlavní program ještě s každodenními úkoly', side: 'right' }
+      { src: 'assets/img/story/prehlavni.jpg', alt: 'Hlavní program ještě s každodenními úkoly', side: 'right' },
+      { src: 'assets/img/story/hlavni.jpg', alt: 'Hlavní program po odstranění úkolů', side: 'right' }
     ],
     paragraphs: [
       'Jedna z nejdůležitějších částí projektu přišla až poté, co aplikace začala fungovat – zjistila jsem, že některé věci, které mi při návrhu připadaly užitečné, ve skutečnosti užitečné nebyly.',
@@ -225,9 +226,9 @@ const STORY_STOPS = [
       'Po vydání aplikace jsem začala sledovat, co se skutečně děje.'
     ],
     features: [
-      { icon: '📊', title: 'Firebase Analytics', body: 'Chování uživatelů a využívání jednotlivých částí.' },
-      { icon: '🐞', title: 'Crashlytics', body: 'Technické problémy a pády aplikace.' },
-      { icon: '💬', title: 'Feedback', body: 'Co uživatelé přímo v aplikaci napíšou.' }
+      { icon: 'chart', title: 'Firebase Analytics', body: 'Chování uživatelů a využívání jednotlivých částí.' },
+      { icon: 'bug', title: 'Crashlytics', body: 'Technické problémy a pády aplikace.' },
+      { icon: 'chat', title: 'Feedback', body: 'Co uživatelé přímo v aplikaci napíšou.' }
     ],
     insight: {
       title: 'Tyto tři zdroje mi dávají mnohem lepší základ pro rozhodování.',
