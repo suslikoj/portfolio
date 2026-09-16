@@ -7,13 +7,18 @@
   const band = document.querySelector('.work-band');
   const workSection = band ? (band.closest('.work') || band) : null;
   const projectTargets = Array.from(document.querySelectorAll('.project'));
+  const contactSection = document.querySelector('.contact');
+  const footerWrap = document.querySelector('.back-to-top-wrap');
 
   const BAND_REVEAL_MS = 1100;
   const MEDIA_RATIO = 0.1;
   const TEXT_RATIO = 0.2;
+  const REVEAL_RATIO = 0.25;
 
   let bandRevealed = false;
   let projectsEnabled = false;
+  let contactRevealed = !contactSection;
+  let footerRevealed = !footerWrap;
 
   function visibleRatio(el) {
     const rect = el.getBoundingClientRect();
@@ -23,6 +28,16 @@
   }
 
   function check() {
+    if (!contactRevealed && visibleRatio(contactSection) >= REVEAL_RATIO) {
+      contactRevealed = true;
+      contactSection.classList.add('in-view');
+    }
+
+    if (!footerRevealed && visibleRatio(footerWrap) >= REVEAL_RATIO) {
+      footerRevealed = true;
+      footerWrap.classList.add('in-view');
+    }
+
     if (!bandRevealed && workSection) {
       if (visibleRatio(band) >= 0.15) {
         bandRevealed = true;
@@ -33,24 +48,25 @@
       projectsEnabled = true;
     }
 
-    if (!projectsEnabled) return;
+    let pending = !projectsEnabled;
 
-    let pending = false;
-    projectTargets.forEach(project => {
-      const mediaIn = project.classList.contains('media-in');
-      const textIn = project.classList.contains('text-in');
-      if (mediaIn && textIn) return;
+    if (projectsEnabled) {
+      projectTargets.forEach(project => {
+        const mediaIn = project.classList.contains('media-in');
+        const textIn = project.classList.contains('text-in');
+        if (mediaIn && textIn) return;
 
-      const ratio = visibleRatio(project);
-      if (!mediaIn && ratio >= MEDIA_RATIO) project.classList.add('media-in');
-      if (!textIn && ratio >= TEXT_RATIO) project.classList.add('text-in');
+        const ratio = visibleRatio(project);
+        if (!mediaIn && ratio >= MEDIA_RATIO) project.classList.add('media-in');
+        if (!textIn && ratio >= TEXT_RATIO) project.classList.add('text-in');
 
-      if (!project.classList.contains('media-in') || !project.classList.contains('text-in')) {
-        pending = true;
-      }
-    });
+        if (!project.classList.contains('media-in') || !project.classList.contains('text-in')) {
+          pending = true;
+        }
+      });
+    }
 
-    if (!pending && projectsEnabled) {
+    if (!pending && contactRevealed && footerRevealed) {
       window.removeEventListener('scroll', check);
       window.removeEventListener('resize', check);
     }

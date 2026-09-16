@@ -25,7 +25,7 @@
   const el = document.getElementById('rotatingLine');
   if (!el) return;
 
-  const INTERVAL = 3500;
+  const INTERVAL = 3000;
   const FADE = 400;
   let index = 0;
 
