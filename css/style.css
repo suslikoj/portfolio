@@ -591,6 +591,40 @@ section {
   50%, 100% { opacity: 0; }
 }
 
+/* ---------- Contact ---------- */
+
+.contact {
+  background: var(--lilac);
+}
+
+.contact-inner {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 6rem clamp(1.5rem, 6vw, 6rem);
+  text-align: center;
+}
+
+.contact-title {
+  margin: 0 0 1rem;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  color: var(--brown);
+}
+
+.contact-text {
+  margin: 0 0 2.5rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--brown);
+}
+
+.contact-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
 /* ---------- Footer ---------- */
 
 .back-to-top-wrap {
