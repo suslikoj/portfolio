@@ -1,6 +1,5 @@
 (function () {
   const lines = [
-    'jednou si oholila hlavu.',
     'je pro každou srandu.',
     'je nadšenec do zdravého jídla.',
     'leze, běhá a občas přemýšlí, proč si to vlastně dělá.',
